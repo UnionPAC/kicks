@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Item from "@/components/Item";
 import { addToCart } from "../../redux/reducers";
 import { useDispatch } from "react-redux";
+import { STRAPI_URL } from "@/constants";
 
 const ItemPage = () => {
   const dispatch = useDispatch();
@@ -21,23 +22,15 @@ const ItemPage = () => {
 
   // how are we going to get the individual item's info?
   const getItem = async () => {
-    // /api/items/:id
-    // how to get the id?
-    // we can use useRouter from next/router
-    const res = await fetch(
-      `https://strapi-ygb4.onrender.com/api/items/${itemId}?populate=image`,
-      { method: "GET" }
-    );
+    const res = await fetch(`${STRAPI_URL}api/items/${itemId}?populate=image`);
     const data = await res.json();
-    // console.log(data);
-    setItem(data.data);
+    setItem(data);
   };
 
   // get all items in order to display related products
   const getAllItems = async () => {
-    const res = await fetch("https://strapi-ygb4.onrender.com/api/items?populate=image");
+    const res = await fetch(`${STRAPI_URL}api/items?populate=image`);
     const data = await res.json();
-    console.log(data);
     setItems(data.data);
   };
 
@@ -62,8 +55,11 @@ const ItemPage = () => {
         {/* Left: Item Image */}
         <Box flex="1 1 30%" marginBottom="40px">
           <img
-            src={`https://strapi-ygb4.onrender.com${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
-            alt={item?.attributes?.name}
+            src={
+              item?.data?.attributes?.image?.data?.attributes?.formats?.medium
+                ?.url
+            }
+            alt={item?.data?.attributes?.name}
             width={480}
             height={480}
             style={{ objectFit: "contain" }}
@@ -72,12 +68,12 @@ const ItemPage = () => {
         {/* Right: Item Content */}
         <Box flex="1 1 60%" marginBottom="40px">
           <Box margin="15px 0">
-            <Typography variant="h3">{item?.attributes?.name}</Typography>
+            <Typography variant="h3">{item?.data?.attributes?.name}</Typography>
             <Typography margin="10px 0" fontSize="18px" fontWeight="bold">
-              ${item?.attributes?.price}
+              ${item?.data?.attributes?.price}
             </Typography>
             <Typography marginTop="20px" width="80%">
-              {item?.attributes?.shortDescription}
+              {item?.data?.attributes?.shortDescription[0]?.children[0]?.text}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center" minHeight="50px">
@@ -99,7 +95,9 @@ const ItemPage = () => {
               </IconButton>
             </Box>
             <Button
-              onClick={() => dispatch(addToCart({ item: { ...item, count } }))}
+              onClick={() =>
+                dispatch(addToCart({ item: { ...item.data, count } }))
+              }
               sx={{
                 backgroundColor: "#222",
                 color: "white",
@@ -119,7 +117,7 @@ const ItemPage = () => {
               margin="20px 0"
             >
               CATEGORY:{" "}
-              {item?.attributes?.category
+              {item?.data?.attributes?.category
                 .replace(/([A-Z])/g, " $1")
                 .replace(/^./, (str) => str.toUpperCase())}
             </Typography>
@@ -152,9 +150,10 @@ const ItemPage = () => {
       </Box>
       {/* Description/ Reviews Content*/}
       <Box display="flex" flex="wrap" gap="15px">
-        {/* {item?.attributes?.longDescription} */}
         {value === "description" && (
-          <div>{item?.attributes?.longDescription}</div>
+          <div>
+            {item?.data?.attributes?.longDescription[0]?.children[0]?.text}
+          </div>
         )}
         {value === "reviews" && (
           <div style={{ marginLeft: "10px" }}>No Reviews Yet</div>

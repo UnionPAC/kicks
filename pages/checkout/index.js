@@ -6,11 +6,10 @@ import Shipping from "@/components/checkout/Shipping";
 import Payment from "@/components/checkout/Payment";
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
+import { STRAPI_URL } from "@/constants";
 
 const getStripePromise = async () => {
   const pkTestString = process.env.NEXT_PUBLIC_STRIPE_TEST_PUB_KEY.toString();
-  // console.log(pkTestString);
-  // console.log(typeof pkTestString);
   const stripePromise = loadStripe(pkTestString);
   return await stripePromise;
 };
@@ -42,32 +41,29 @@ const Checkout = () => {
 
   const makePayment = async (values) => {
     const stripe = await getStripePromise();
-    // console.log(stripe); ✅
 
     const requestBody = {
-      userName: [
-        values.billingInfo.firstName,
-        values.billingInfo.lastName,
-      ].join(" "),
-      email: values.email,
-      products: cart.map(({ id, count }) => ({
-        id,
-        count,
-      })),
+      data: {
+        userName: [
+          values.billingInfo.firstName,
+          values.billingInfo.lastName,
+        ].join(" "),
+        email: values.email,
+        products: cart.map(({ id, count }) => ({
+          id,
+          count,
+        })),
+      },
     };
 
-    // console.log(requestBody); ✅
-
-    // THIS IS WHERE THE ERROR IS COMING FROM
-    const res = await fetch("https://strapi-ygb4.onrender.com/api/orders", {
+    const res = await fetch(`${STRAPI_URL}api/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
-    console.log(res); 
-    const data = await res.json();
-    console.log(data);
-    await stripe.redirectToCheckout({ sessionId: data.id });
+
+    const session = await res.json();
+    await stripe.redirectToCheckout({ sessionId: session.id });
   };
 
   return (

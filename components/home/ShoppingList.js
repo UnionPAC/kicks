@@ -3,6 +3,7 @@ import { Box, Typography, Tabs, Tab, useMediaQuery } from "@mui/material";
 import Item from "../Item";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "@/redux/reducers";
+import { STRAPI_URL } from "@/constants";
 
 const ShoppingList = () => {
   const [value, setValue] = useState("all");
@@ -18,12 +19,14 @@ const ShoppingList = () => {
   // we need to get all the items so we can render an Item component for each item
   const getAllItems = async () => {
     try {
-      const res = await fetch(
-        "https://strapi-ygb4.onrender.com/api/items?populate=image",
-        { method: "GET" }
-      );
+      // fetch from strapi cloud
+      // const res = await fetch();
+      // const data = await res.json();
+      // // console.log(data);
+      // dispatch(setItems(data.data));
+
+      const res = await fetch(`${STRAPI_URL}api/items?populate=image`);
       const data = await res.json();
-      // console.log(data);
       dispatch(setItems(data.data));
     } catch (error) {
       console.log(error);
@@ -81,9 +84,12 @@ const ShoppingList = () => {
         >
           {/* Filter:  All */}
           {value === "all" &&
-            items.map((item) => (
-              <Item item={item} key={item.id} width={300} height={300} />
-            ))}
+            items.map((item) => {
+              // console.log(item);
+              return (
+                <Item item={item} key={item.id} width={300} height={300} />
+              );
+            })}
           {/* Filter:  New Arrivals */}
           {value === "newArrivals" &&
             newArrivalItems.map((item) => (

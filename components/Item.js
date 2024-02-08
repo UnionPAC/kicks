@@ -10,7 +10,6 @@ const Item = ({ item, width, height }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [count, setCount] = useState(1);
   const { category, name, price, image } = item.attributes;
-  const url = image.data.attributes.formats.medium.url;
 
   const dispatch = useDispatch();
 
@@ -23,7 +22,7 @@ const Item = ({ item, width, height }) => {
       >
         <Link href={`/item/${item.id}`}>
           <img
-            src={`https://strapi-ygb4.onrender.com${url}`}
+            src={image.data.attributes.formats.medium.url}
             alt={name}
             width={width}
             height={height}
