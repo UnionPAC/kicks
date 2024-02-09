@@ -56,14 +56,15 @@ const Checkout = () => {
       },
     };
 
-    const res = await fetch(`${STRAPI_URL}api/orders`, {
+    const res = await fetch(`https://upbeat-confidence-86d169b626.strapiapp.com/api/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
 
-    const session = await res.json();
-    await stripe.redirectToCheckout({ sessionId: session.id });
+    const data = await res.json();
+    console.log(data);
+    // await stripe.redirectToCheckout({ sessionId: data.id });
   };
 
   return (

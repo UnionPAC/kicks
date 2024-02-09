@@ -22,8 +22,12 @@ const ItemPage = () => {
 
   // how are we going to get the individual item's info?
   const getItem = async () => {
-    const res = await fetch(`${STRAPI_URL}api/items/${itemId}?populate=image`);
+    const res = await fetch(
+      `${STRAPI_URL}api/items/${itemId}?populate=image`
+    );
     const data = await res.json();
+    console.log(data)
+    // data.attributes.image.data.attributes.formats.medium.url
     setItem(data);
   };
 
@@ -55,10 +59,8 @@ const ItemPage = () => {
         {/* Left: Item Image */}
         <Box flex="1 1 30%" marginBottom="40px">
           <img
-            src={
-              item?.data?.attributes?.image?.data?.attributes?.formats?.medium
-                ?.url
-            }
+            // src={`http://localhost:1337${item?.data?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
+            src={item?.data?.attributes?.image?.data?.attributes?.formats?.medium?.url}
             alt={item?.data?.attributes?.name}
             width={480}
             height={480}

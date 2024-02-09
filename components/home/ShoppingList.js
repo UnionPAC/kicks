@@ -19,12 +19,6 @@ const ShoppingList = () => {
   // we need to get all the items so we can render an Item component for each item
   const getAllItems = async () => {
     try {
-      // fetch from strapi cloud
-      // const res = await fetch();
-      // const data = await res.json();
-      // // console.log(data);
-      // dispatch(setItems(data.data));
-
       const res = await fetch(`${STRAPI_URL}api/items?populate=image`);
       const data = await res.json();
       dispatch(setItems(data.data));
@@ -34,15 +28,15 @@ const ShoppingList = () => {
   };
 
   // filtered categories
-  const newArrivalItems = items.filter(
+  const newArrivalItems = items?.filter(
     (item) => item.attributes.category === "newArrivals"
   );
 
-  const bestSellerItems = items.filter(
+  const bestSellerItems = items?.filter(
     (item) => item.attributes.category === "bestSellers"
   );
 
-  const topRatedItems = items.filter(
+  const topRatedItems = items?.filter(
     (item) => item.attributes.category === "topRated"
   );
 
@@ -84,7 +78,7 @@ const ShoppingList = () => {
         >
           {/* Filter:  All */}
           {value === "all" &&
-            items.map((item) => {
+            items?.map((item) => {
               // console.log(item);
               return (
                 <Item item={item} key={item.id} width={300} height={300} />
