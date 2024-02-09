@@ -1,5 +1,7 @@
 # Kicks 👟
 
+An e-commerce platform for sneaker nerds.
+
 ## Table of contents
 
 - [Overview](#overview)
@@ -9,12 +11,13 @@
   - [Links](#links)
 - [My process](#my-process)
   - [Tech Stack](#tech-stack-🧙‍♂️)
+- [Author](#author)
 
 ## Overview
 
-## Description
+### Description
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed urna sed massa pharetra aliquam ut ut felis. Sed feugiat purus arcu, ac pulvinar nulla interdum a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla ut justo justo. In rhoncus dignissim mauris eu vestibulum. 
+The ultimate online destination for sneaker enthusiasts. We offer a carefully curated selection of premium quality sneakers from the hottest brands. Shop our latest drops, limited-edition releases, and classic styles with lightning-fast shipping. Join our community of like-minded sneakerheads on social media and take your sneaker game to the next level.
 
 ### Project Goal ✨
 
@@ -24,13 +27,16 @@ E-commerce is at the heart of the web, and so I think it is super important to h
 
 ### Screenshots
 
-![](./screenshots/desktop.png)
+![Homepage Design](./screenshots/home.png)
+![Shopping List (Featured Sneakers) Design](./screenshots/shopping-list.png)
+![Design preview of the cart menu](./screenshots/cart-menu.png)
+![Design preview of the single product page](./screenshots/product-page.png)
 
 ### Links
 
-- [Live Demo]()
+- [Live Demo](https://nextjs-kicks-ecommerce.vercel.app/)
 
-- [Strapi Server Repo](https://github.com/UnionPAC/kicks-strapi) - This powers the backend Strapi CMS server, which is responsible for hosting the product catalog and more.
+- [Strapi Server Repo](https://github.com/UnionPAC/strapi-kicks) - This powers the backend Strapi CMS server, which is responsible for hosting the product catalog and more.
 
 ## My process
 
@@ -45,3 +51,11 @@ E-commerce is at the heart of the web, and so I think it is super important to h
 - Formik
 - Strapi
 
+**Backend**
+
+- Strapi (CMS)
+
+## Author
+
+- Website - [Geoff Jamieson](https://www.geoffjamieson.com/)
+- LinkedIn - [linkedin/geoffjamieson](https://www.linkedin.com/in/geoffjamieson/)
